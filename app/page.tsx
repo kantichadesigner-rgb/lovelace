@@ -59,15 +59,15 @@ export default function Home() {
               sizes="(min-width: 1024px) 30vw, (min-width: 640px) 32vw, 100vw"
             />
           </div>
-          {/* TikTok embed: 325×733 — ความสูงตาม embed มาตรฐาน ลดแถบขาวด้านล่าง; ไม่มีกรอบ/bg รอบ iframe */}
-          <div className="mx-auto flex w-[325px] max-w-full justify-center leading-none">
+          {/* TikTok: ความสูง 820 ตาม embed — กล่อง aspect 325/820 ให้มือถือไม่บีบสูงเกินไปจนเลื่อนข้างในไม่ได้ */}
+          <div className="relative mx-auto aspect-[325/820] w-full max-w-[325px]">
             {tiktokVideoId && (
               <iframe
                 title="TikTok video"
                 src={`https://www.tiktok.com/embed/v2/${tiktokVideoId}`}
                 width={325}
-                height={733}
-                className="m-0 block max-w-full border-0 p-0 align-top"
+                height={820}
+                className="absolute inset-0 m-0 block h-full w-full border-0 p-0"
                 allow="fullscreen; autoplay; encrypted-media; picture-in-picture"
                 allowFullScreen
                 loading="lazy"
