@@ -1,91 +1,111 @@
 'use client';
 
+import Image from 'next/image';
+
+/** ลิงก์วิดีโอ TikTok แบบมี `/video/เลข` — ตั้งค่า `NEXT_PUBLIC_TIKTOK_VIDEO_URL` ใน .env.local ถ้าต้องการเปลี่ยน */
+const DEFAULT_TIKTOK_VIDEO_URL =
+  'https://www.tiktok.com/@artie_kanticha/video/7614900064653151506';
+
+function getTikTokVideoId(url: string | undefined): string | null {
+  if (!url?.trim()) return null;
+  const m = url.match(/tiktok\.com\/@[^/]+\/video\/(\d+)/i);
+  return m?.[1] ?? null;
+}
+
 export default function Home() {
-  // Featured luxury fashion products
-  const featuredProducts = [
-    { name: 'Monaco Satin Evening Gown', price: '$980' },
-    { name: 'Étoile Cashmere Wrap Coat', price: '$1,240' },
-    { name: 'Valentina Silk Blouse', price: '$560' },
-    { name: 'Lumière Tailored Trousers', price: '$490' },
-    { name: 'Noir Pearl-Button Blazer', price: '$820' },
-    { name: 'Aurelia Leather Mini Bag', price: '$1,150' },
-  ];
-
+  const tiktokUrl =
+    process.env.NEXT_PUBLIC_TIKTOK_VIDEO_URL ?? DEFAULT_TIKTOK_VIDEO_URL;
+  const tiktokVideoId = getTikTokVideoId(tiktokUrl);
   return (
-    <div className="min-h-screen bg-[#F5F5F1] text-[#333333] font-sans">
-      {/* Sticky Navigation */}
-      <nav className="sticky top-0 z-30 bg-[#F5F5F1]/95 backdrop-blur border-b border-[#ECEBE6] px-4 py-4 sm:px-6 md:px-16 md:py-6 flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif tracking-[0.2em] sm:tracking-widest">
-          LOVELACE
-        </h1>
-        <ul className="flex w-full sm:w-auto justify-between sm:justify-start sm:space-x-8 text-sm sm:text-base font-medium">
-          <li>
-            <a href="#collection" className="hover:underline">
-              Collection
-            </a>
-          </li>
-          <li>
-            <a href="#about" className="hover:underline">
-              About
-            </a>
-          </li>
-          <li>
-            <a href="#contact" className="hover:underline">
-              Contact
-            </a>
-          </li>
-        </ul>
-      </nav>
-
-      {/* Hero Section */}
-      <section className="flex flex-col-reverse md:flex-row items-center md:justify-between px-4 sm:px-6 md:px-16 pt-10 sm:pt-14 md:pt-24 pb-12 sm:pb-16 md:pb-24 gap-8 md:gap-0">
-        {/* Hero Text */}
-        <div className="md:w-1/2 flex flex-col items-start space-y-6 sm:space-y-8">
-          <h2 className="font-serif text-4xl leading-tight sm:text-5xl md:text-[3.5rem] md:leading-none font-light tracking-tight">
-            Effortless Elegance,<br />For Modern Women
-          </h2>
-          <p className="text-base sm:text-lg md:text-xl mt-1 sm:mt-2 max-w-xl">
-            Discover timeless pieces crafted for sophistication and comfort.
-          </p>
-          <a
-            href="#collection"
-            className="mt-2 sm:mt-4 px-6 sm:px-8 py-3 bg-[#333333] text-[#F5F5F1] rounded-full font-medium uppercase tracking-widest text-xs sm:text-sm hover:bg-[#222] transition"
-          >
-            Shop Collection
-          </a>
+    <div className="min-h-screen bg-[#E3DBD3] text-[#4A3626]">
+      {/* Hero: centered logo */}
+      <header className="px-4 min-h-[56vh] sm:min-h-[62vh] lg:min-h-[68vh] flex items-center">
+        <div className="relative mx-auto flex max-w-md justify-center">
+          <Image
+            src="/logo.svg"
+            alt="Lovelace"
+            width={440}
+            height={203}
+            priority
+            className="h-auto w-[min(88vw,360px)]"
+          />
         </div>
-        {/* Hero Image Placeholder */}
-        <div className="md:w-1/2 w-full flex justify-center mb-2 md:mb-0">
-          <div className="bg-gray-200 rounded-xl w-full max-w-[330px] h-[390px] sm:h-[430px] md:max-w-[400px] md:h-[520px] flex items-center justify-center shadow-md">
-            <span className="text-[#B0B0A9] font-serif text-lg sm:text-xl md:text-2xl select-none">
-              Fashion Image
-            </span>
+      </header>
+
+      {/* Announcement bar */}
+      <div className="bg-[#4A3626] px-3 py-2.5 text-center text-[10px] font-medium leading-snug tracking-wide text-white sm:text-xs md:text-sm">
+        <p className="flex flex-wrap items-center justify-center gap-x-6 gap-y-1.5 sm:gap-x-10">
+          <span>Coming soon</span>
+          <span aria-hidden>//</span>
+          <span>Let&apos;s be Lovelace family</span>
+          <span aria-hidden>//</span>
+          <span>Fashion Community</span>
+        </p>
+      </div>
+
+      {/* Three-up placeholders */}
+      <section className="px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
+        <div className="mx-auto grid max-w-lg grid-cols-1 items-center gap-3 sm:grid-cols-3 sm:gap-3 md:max-w-2xl md:gap-4 lg:max-w-4xl">
+          <div className="relative aspect-[3/4] overflow-hidden rounded-2xl sm:rounded-3xl">
+            <Image
+              src="/gallery-left.png"
+              alt="Lovelace gallery left"
+              fill
+              className="object-cover"
+              sizes="(min-width: 1024px) 30vw, (min-width: 640px) 32vw, 100vw"
+            />
+          </div>
+          <div className="relative aspect-[9/16] w-full overflow-hidden rounded-2xl bg-black sm:rounded-3xl">
+            {tiktokVideoId && (
+              <iframe
+                title="TikTok video"
+                src={`https://www.tiktok.com/embed/v2/${tiktokVideoId}`}
+                className="absolute inset-0 h-full w-full border-0"
+                allow="fullscreen; autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
+            )}
+          </div>
+          <div className="relative aspect-[3/4] overflow-hidden rounded-2xl sm:rounded-3xl">
+            <Image
+              src="/gallery-right.png"
+              alt="Lovelace gallery right"
+              fill
+              className="object-cover"
+              sizes="(min-width: 1024px) 30vw, (min-width: 640px) 32vw, 100vw"
+            />
           </div>
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section id="collection" className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 pb-16 sm:pb-24">
-        <h3 className="font-serif text-2xl md:text-3xl font-normal mb-8 sm:mb-10 text-center tracking-tight">
-          Featured Styles
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
-          {featuredProducts.map((product) => (
-            <div
-              key={product.name}
-              className="flex flex-col items-center bg-white/70 rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md transition"
-            >
-              <div className="h-52 sm:h-56 w-full bg-gray-100 rounded-md mb-5 sm:mb-6 flex items-center justify-center">
-                <span className="text-gray-300 font-serif select-none">Image</span>
-              </div>
-              <span className="font-serif text-lg md:text-xl mb-2 text-center min-h-14 flex items-center">
-                {product.name}
-              </span>
-              <span className="text-base font-medium">{product.price}</span>
-            </div>
-          ))}
+      {/* Feature card: single frame over pattern band */}
+      <section
+        className="relative bg-[#4A3626] bg-repeat px-4 py-10 sm:px-6 sm:py-14"
+        style={{
+          backgroundImage: 'url(/bg-pattern.png)',
+          backgroundSize: '280px auto',
+        }}
+      >
+        <div className="absolute inset-0 bg-[#4A3626]/55" aria-hidden />
+        <div className="relative mx-auto max-w-xl">
+          <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl shadow-sm ring-1 ring-black/5 sm:rounded-3xl">
+            <Image
+              src="/feature-card.png"
+              alt="Lovelace feature"
+              fill
+              className="object-cover object-bottom"
+              sizes="(min-width: 1280px) 36rem, 90vw"
+            />
+          </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="flex flex-col gap-2 border-t border-[#D5CDC4] bg-[#E3DBD3] px-4 py-4 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-6">
+        <span className="font-medium">IG : lovelace.ll</span>
+        <span className="text-[#4A3626]/90">Fashion Community</span>
+      </footer>
     </div>
   );
 }
