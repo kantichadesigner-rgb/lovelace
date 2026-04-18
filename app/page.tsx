@@ -32,10 +32,10 @@ export default function Home() {
         </p>
       </div>
 
-      {/* Gallery: three images (เดิมกลางเป็น TikTok — ตอนนี้เป็นรูปแทน) */}
-      <section className="px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
+      {/* Gallery: มือถือ = รูปสี่เหลี่ยมจัตุรัส + padding ข้าง ~64px; sm+ = แนวตั้ง 3:4 เดิม */}
+      <section className="px-[64px] py-8 sm:px-6 sm:py-10 lg:px-8">
         <div className="mx-auto grid w-full max-w-lg grid-cols-1 items-center gap-3 sm:max-w-5xl sm:grid-cols-3 sm:gap-4 md:gap-5">
-          <div className="relative aspect-[3/4] overflow-hidden rounded-2xl sm:rounded-3xl">
+          <div className="relative aspect-square overflow-hidden rounded-2xl sm:aspect-[3/4] sm:rounded-3xl">
             <Image
               src="/gallery-left.png"
               alt="Lovelace gallery left"
@@ -44,7 +44,7 @@ export default function Home() {
               sizes="(min-width: 1024px) 30vw, (min-width: 640px) 32vw, 100vw"
             />
           </div>
-          <div className="relative aspect-[3/4] overflow-hidden rounded-2xl sm:rounded-3xl">
+          <div className="relative aspect-square overflow-hidden rounded-2xl sm:aspect-[3/4] sm:rounded-3xl">
             <Image
               src="/gallery-center.png"
               alt="Lovelace gallery center"
@@ -53,7 +53,7 @@ export default function Home() {
               sizes="(min-width: 1024px) 30vw, (min-width: 640px) 32vw, 100vw"
             />
           </div>
-          <div className="relative aspect-[3/4] overflow-hidden rounded-2xl sm:rounded-3xl">
+          <div className="relative aspect-square overflow-hidden rounded-2xl sm:aspect-[3/4] sm:rounded-3xl">
             <Image
               src="/gallery-right-v2.png"
               alt="Lovelace gallery right"
